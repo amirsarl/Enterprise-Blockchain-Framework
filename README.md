@@ -156,13 +156,16 @@ Healthcare
 
 📄 License
 
-Licensed under the Apache License, Version 2.0. See LICENSE for details.
+Licensed free
 
 🤝 Community & Support
 
 · Documentation: docs.blockchain-framework.io
+
 · Discord: -----
+
 · Twitter: -----
+
 · Email: amirsarlak2009wo@gmail.com
 
 🔮 Roadmap
