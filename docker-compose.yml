@@ -1,33 +1,96 @@
 version: '3.8'
 
 services:
+  # PostgreSQL Database
   postgres:
     image: postgres:15-alpine
+    container_name: blockchain-postgres
     environment:
       POSTGRES_DB: blockchain
       POSTGRES_USER: blockchain
-      POSTGRES_PASSWORD: secure_password
+      POSTGRES_PASSWORD: blockchain123
     volumes:
       - postgres_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
       - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U blockchain"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
+  # Redis Cache
   redis:
     image: redis:7-alpine
+    container_name: blockchain-redis
     ports:
       - "6379:6379"
+    command: redis-server --appendonly yes
+    volumes:
+      - redis_data:/data
 
-  blockchain-node:
+  # Blockchain API Server
+  api:
     build: .
+    container_name: blockchain-api
     ports:
       - "8000:8000"
-      - "8545:8545"
+      - "8545:8545"  # JSON-RPC port
     environment:
-      - DATABASE_URL=postgresql://blockchain:secure_password@postgres/blockchain
+      - DATABASE_URL=postgresql://blockchain:blockchain123@postgres/blockchain
       - REDIS_URL=redis://redis:6379
+      - NETWORK=testnet
+      - LOG_LEVEL=INFO
     depends_on:
-      - postgres
-      - redis
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    volumes:
+      - ./src:/app/src
+      - ./config:/app/config
+    command: uvicorn src.main:app --host 0.0.0.0 --port 8000 --reload
+
+  # Blockchain Node (Optional)
+  node:
+    build: .
+    container_name: blockchain-node
+    environment:
+      - NODE_TYPE=validator
+      - NETWORK=testnet
+    depends_on:
+      - api
+    volumes:
+      - ./data:/app/data
+
+  # Monitoring (Prometheus + Grafana)
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: blockchain-prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: blockchain-grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./monitoring/dashboards:/etc/grafana/provisioning/dashboards
 
 volumes:
   postgres_data:
+  redis_data:
+  prometheus_data:
+  grafana_data:
+
+networks:
+  default:
+    name: blockchain-network
