@@ -1,6 +1,6 @@
 """
 Enterprise Blockchain Framework - Main Entry Point
-Enterprise Blockchain Framework - نقطه شروع اصلی
+Enterprise Blockchain Framework - Starting point
 """
 
 import asyncio
@@ -29,7 +29,7 @@ app = FastAPI(
 )
 
 class BlockchainStatus(BaseModel):
-    """مدل وضعیت بلاکچین / Blockchain status model"""
+    """Blockchain status model"""
     status: str
     version: str
     network: str
@@ -38,7 +38,7 @@ class BlockchainStatus(BaseModel):
 
 @app.get("/", tags=["Root"])
 async def read_root():
-    """صفحه اصلی / Home page"""
+    """Home page"""
     return {
         "message": "Welcome to Enterprise Blockchain Framework API",
         "documentation": "/docs",
@@ -47,7 +47,7 @@ async def read_root():
 
 @app.get("/status", response_model=BlockchainStatus, tags=["Blockchain"])
 async def get_blockchain_status():
-    """دریافت وضعیت بلاکچین / Get blockchain status"""
+    """Get blockchain status"""
     return BlockchainStatus(
         status="active",
         version="1.0.0",
@@ -58,11 +58,11 @@ async def get_blockchain_status():
 
 @app.get("/health", tags=["Health"])
 async def health_check():
-    """بررسی سلامت سرویس / Health check"""
+    """Health check"""
     return {"status": "healthy", "timestamp": asyncio.get_event_loop().time()}
 
 class Transaction(BaseModel):
-    """مدل تراکنش / Transaction model"""
+    """Transaction model"""
     sender: str
     receiver: str
     amount: float
@@ -70,7 +70,7 @@ class Transaction(BaseModel):
 
 @app.post("/transactions", tags=["Transactions"])
 async def create_transaction(transaction: Transaction):
-    """ایجاد تراکنش جدید / Create new transaction"""
+    """Create new transaction"""
     logger.info(f"New transaction: {transaction.sender} -> {transaction.receiver}")
     
     # Simulate transaction processing
@@ -84,7 +84,7 @@ async def create_transaction(transaction: Transaction):
 
 @app.get("/blocks/latest", tags=["Blocks"])
 async def get_latest_block():
-    """دریافت آخرین بلوک / Get latest block"""
+    """Get latest block"""
     return {
         "block_number": 0,
         "timestamp": "2024-01-01T00:00:00Z",
