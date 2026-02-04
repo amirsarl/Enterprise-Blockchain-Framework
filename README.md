@@ -1,8 +1,8 @@
-## 🏢 Overview
+## Overview
 
 A production-grade blockchain framework designed for enterprise applications, providing modular architecture, high throughput, and regulatory compliance features.
 
-## ✨ Features
+## Features
 
 ### Core Modules
 - **Distributed Ledger**: Immutable, append-only ledger implementation
@@ -18,7 +18,7 @@ A production-grade blockchain framework designed for enterprise applications, pr
 - **Monitoring & Analytics**: Real-time blockchain analytics dashboard
 - **API Gateway**: REST and GraphQL APIs for easy integration
 
-## 🏗️ Architecture
+## Architecture
 
 ```
 
@@ -40,7 +40,7 @@ enterprise-blockchain/
 
 ```
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Prerequisites
 - Python 3.8+
@@ -73,7 +73,7 @@ Docker Deployment
 docker-compose up -d
 ```
 
-📚 API Documentation
+ API Documentation
 
 REST API Examples
 
@@ -90,7 +90,7 @@ curl -X POST https://api.blockchain.local/transactions \
 curl -X GET https://api.blockchain.local/contracts/0x.../state
 ```
 
-🔧 Development
+ Development
 
 Setting Up Development Environment
 
@@ -114,14 +114,14 @@ Contributing
 4. Push to branch (git push origin feature/AmazingFeature)
 5. Open a Pull Request
 
-📊 Performance Metrics
+ Performance Metrics
 
 · Throughput: 10,000+ TPS (with proper configuration)
 · Latency: < 2 seconds finality
 · Node Synchronization: Minutes for full history
 · Storage: Efficient Merkle Patricia Trie implementation
 
-🛡️ Security
+ Security
 
 Audits & Compliance
 
@@ -134,7 +134,7 @@ Bug Bounty Program
 
 Responsible disclosure program via security@example.com
 
-🌐 Use Cases
+ Use Cases
 
 Financial Services
 
@@ -154,11 +154,11 @@ Healthcare
 · Pharmaceutical supply chain
 · Clinical trials data integrity
 
-📄 License
+ License
 
 Licensed free
 
-🤝 Community & Support
+ Community & Support
 
 · Documentation: docs.blockchain-framework.io
 
@@ -168,7 +168,7 @@ Licensed free
 
 · Email: amirsarlak2009wo@gmail.com
 
-🔮 Roadmap
+ Roadmap
 
 Q4 2024
 
